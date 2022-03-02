@@ -1,0 +1,31 @@
+{
+  "name": "questionsandanswers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Team-Daisy/QuestionsAndAnswers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Team-Daisy/QuestionsAndAnswers/issues"
+  },
+  "homepage": "https://github.com/SDC-Team-Daisy/QuestionsAndAnswers#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15",
+    "postgres": "^1.0.2",
+    "postgresql": "^0.0.1",
+    "sql": "^0.78.0"
+  }
+}
