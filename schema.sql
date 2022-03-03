@@ -1,72 +1,44 @@
-DROP DATABASE IF EXISTS questionsAndAnswers;
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
 
-CREATE DATABASE questionsAndAnswers;
-
-USE questionsAndAnswers;
-
-DROP TABLE IF EXISTS `questions`;
-
-CREATE TABLE `questions` (
-  `id` SERIAL PRIMARY KEY,
-  `body` VARCHAR NOT NULL,
-  `timePosted` TIME NOT NULL,
-  `helpfulness` SMALLINT DEFAULT NULL,
-  `report` BOOLEAN NOT NULL,
-  `username` TEXT DEFAULT NULL,
-  `email` TEXT DEFAULT NULL,
-  `product_id` INTEGER NOT NULL,
+CREATE TABLE questions (
+ id BIGSERIAL NOT NULL PRIMARY KEY,
+ product_id INTEGER NOT NULL,
+ body TEXT NOT NULL,
+ date_written TIMESTAMP NOT NULL,
+ asker_name TEXT NOT NULL,
+ asker_email TEXT NOT NULL,
+ reported SMALLINT NOT NULL DEFAULT 0,
+ helpful INTEGER NOT NULL DEFAULT 0
 );
 
-DROP TABLE IF EXISTS `answers`;
-
-CREATE TABLE `answers` (
-  `id` SERIAL PRIMARY KEY,
-  `body` VARCHAR NOT NULL,
-  `timePosted` TIME NOT NULL,
-  `helpfulness` SMALLINT NOT NULL,
-  `report` BOOLEAN NOT NULL,
-  `username` TEXT NOT NULL,
-  `email` TEXT NOT NULL,
-  FOREIGN KEY (id_questions)
-    REFERENCES `questions` (`id`),
+CREATE TABLE answers (
+ id BIGSERIAL NOT NULL PRIMARY KEY,
+ id_questions BIGINT,
+ body TEXT NOT NULL,
+ date_written TIMESTAMP NOT NULL,
+ answerer_name TEXT NOT NULL,
+ answerer_email TEXT NOT NULL,
+ reported SMALLINT NOT NULL DEFAULT 0,
+ helpful INTEGER NOT NULL DEFAULT 0,
+ FOREIGN KEY (id_questions)
+  REFERENCES questions(id)
 );
 
--- ---
--- Table 'photos'
---
--- ---
 
-DROP TABLE IF EXISTS `photos`;
-
-CREATE TABLE `photos` (
-  `id` SERIAL PRIMARY KEY,
-  `url` VARCHAR NOT NULL,
-  FOREIGN KEY (id_answers)
-    REFERENCES `answers` (`id`),
+CREATE TABLE answers_photos (
+ id BIGSERIAL PRIMARY KEY,
+ id_answers BIGINT,
+ url TEXT NOT NULL,
+ FOREIGN KEY (id_answers)
+  REFERENCES answers(id)
 );
 
--- ---
--- Foreign Keys
--- ---
+-- ALTER TABLE answers ADD CONSTRAINT answers_id_questions_fkey FOREIGN KEY (id_questions) REFERENCES questions(id);
+-- ALTER TABLE answers_photos ADD CONSTRAINT answers_photos_id_answers_fkey FOREIGN KEY (id_answers) REFERENCES answers(id);
 
--- ALTER TABLE `answers` ADD FOREIGN KEY (id_questions) REFERENCES `questions` (`id`);
--- ALTER TABLE `photos` ADD FOREIGN KEY (id_answers) REFERENCES `answers` (`id`);
+COPY questions FROM '/Users/karlithomas/Code/hackreactor/QuestionsAndAnswers/questions-processed.csv' DELIMITER ',' CSV HEADER;
 
--- ---
--- Table Properties
--- ---
+COPY answers FROM '/Users/karlithomas/Code/hackreactor/QuestionsAndAnswers/answers-processed.csv' DELIMITER ',' CSV HEADER;
 
--- ALTER TABLE `answers` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `questions` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `photos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ---
--- Test Data
--- ---
-
--- INSERT INTO `answers` (`id`,`body`,`timePosted`,`helpfulness`,`report`,`username`,`email`,`id_questions`) VALUES
--- ('','','','','','','','');
--- INSERT INTO `questions` (`id`,`body`,`timePosted`,`helpfulness`,`report`,`username`,`email`) VALUES
--- ('','','','','','','');
--- INSERT INTO `photos` (`id`,`url`,`id_answers`) VALUES
--- ('','','');
+COPY answers_photos FROM '/Users/karlithomas/Code/hackreactor/QuestionsAndAnswers/answers_photos.csv' DELIMITER ',' CSV HEADER;

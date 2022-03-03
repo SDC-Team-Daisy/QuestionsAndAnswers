@@ -1,31 +1,27 @@
-const mongoose = require('mongoose');
-
-const questionSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  body: String,
-  timePosted: Date,
-  helpfulness: Number,
-  report: Boolean,
-  product_id: Number,
+const { Pool, Client } = require('pg')
+const pool = new Pool({
+  user: 'karlithomas',
+  host: 'localhost',
+  database: 'mydb',
+  password: 'secretpassword',
+  port: 3211,
 })
 
-const answerSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  body: String,
-  timePosted: Date,
-  helpfulness: Number,
-  report: Boolean,
-  product_id: Number,
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  pool.end()
 })
 
-const photoSchema = new mongoose.Schema({
-  url: String,
+const client = new Client({
+  user: 'dbuser',
+  host: 'database.server.com',
+  database: 'mydb',
+  password: 'secretpassword',
+  port: 3211,
 })
 
-const Questions = mongoose.model("Questions", questionSchema);
-const Answers = mongoose.model("Answers", answerSchema);
-const Photos = mongoose.model("Photos", photoSchema);
-
-module.exports = {Questions, Answers, Photos};
+client.connect()
+client.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  client.end()
+})
