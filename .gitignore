@@ -1,1 +1,7 @@
 node_modules
+questions.csv
+answers.csv
+answers_photos.csv
+questions-processed.csv
+answers-processed.csv
+answers_photos-processed.csv
