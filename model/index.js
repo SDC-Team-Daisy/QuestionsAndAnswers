@@ -1,27 +1,40 @@
-const { Pool, Client } = require('pg')
+const { Pool } = require('pg')
+
 const pool = new Pool({
   user: 'karlithomas',
   host: 'localhost',
-  database: 'mydb',
-  password: 'secretpassword',
-  port: 3211,
-})
+  database: 'questionsandanswers',
+  // password: 'secretpassword',
+  port: 5432,
+});
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
-
-const client = new Client({
-  user: 'dbuser',
-  host: 'database.server.com',
-  database: 'mydb',
-  password: 'secretpassword',
-  port: 3211,
-})
-
-client.connect()
-client.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  client.end()
-})
+module.exports = {
+  getQuestions: function(callback) {
+    let queryString = 'SELECT * FROM questions LIMIT 10';
+    // let queryArg = [id];
+    pool.query(queryString, (err, questions) => {
+      callback(err, questions);
+    });
+  },
+   getAnswers: function(callback) {
+    let queryString = 'SELECT * FROM answers LIMIT 10';
+    // let queryArg = [id];
+    pool.query(queryString, (err, answers) => {
+      callback(err, answers);
+    });
+  },
+  postQuestion: function(callback) {
+    let queryString = 'INSERT INTO questions LIMIT 10';
+    // let queryArg = [id];
+    pool.query(queryString, (err, questions) => {
+      callback(err, questions);
+    });
+  },
+  postAnswer: function(callback) {
+    let queryString = 'INSERT INTO answers LIMIT 10';
+    // let queryArg = [id];
+    pool.query(queryString, (err, answer) => {
+      callback(err, answer);
+    });
+  },
+}
