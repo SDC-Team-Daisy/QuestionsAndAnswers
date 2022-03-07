@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch",
     "start": "nodemon server/index.js"
   },
   "repository": {
@@ -25,7 +25,8 @@
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
     "postgres": "^1.0.2",
-    "pq": "^0.0.3"
+    "pq": "^0.0.3",
+    "supertest": "^6.2.2"
   },
   "devDependencies": {
     "csv": "^6.0.5"

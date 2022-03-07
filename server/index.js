@@ -25,3 +25,5 @@ app.get('/qa/questions/:question_id/answers', controller.getAnswers);
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}`)
 });
+
+module.exports = app;
