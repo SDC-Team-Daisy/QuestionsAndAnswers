@@ -9,7 +9,7 @@ module.exports = {
         console.log(err);
         res.sendStatus(500);
       } else {
-        res.send(questions.rows[0]);
+        res.json(questions.rows[0]);
       }
     });
   },
@@ -22,15 +22,19 @@ module.exports = {
       }
     });
   },
+
   postQuestion: function(req, res) {
-    model.postQuestion((err, question) => {
+    model.postQuestion(req.body, (err, question) => {
+      console.log(err, question);
       if (err) {
+        console.log(err);
         res.sendStatus(500);
       } else {
-        res.send(question.rows);
+        res.status(201).json(question.rows[0]);
       }
     });
   },
+
   postAnswer: function(req, res) {
     model.postAnswer((err, answer) => {
       if (err) {

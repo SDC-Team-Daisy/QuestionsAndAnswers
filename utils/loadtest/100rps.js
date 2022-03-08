@@ -5,11 +5,12 @@ import { Counter } from 'k6/metrics';
 export const requests = new Counter('http_reqs');
 
 export const options = {
-  vus: 100,
+  vus: 1000,
   duration: '15s',
 }
 
-const url = 'http://localhost:3000/qa/questions?product_id=1';
+const id = Math.floor(Math.random() * 1000011);
+const url = `http://localhost:3000/qa/questions?product_id=${id}`;
 
 export default function() {
   const res = http.get(url);

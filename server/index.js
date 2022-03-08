@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -10,7 +11,7 @@ app.get('/qa/questions', controller.getQuestions);
 
 app.get('/qa/questions/:question_id/answers', controller.getAnswers);
 
-// app.post('/qa/questions', controller.postQuestion);
+app.post('/qa/questions', controller.postQuestion);
 
 // app.post('/qa/questions/:question_id/answers', controller.postAnswer);
 

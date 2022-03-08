@@ -5,7 +5,7 @@ CREATE TABLE questions (
  id BIGSERIAL NOT NULL PRIMARY KEY,
  product_id INTEGER NOT NULL,
  body TEXT NOT NULL,
- date_written TIMESTAMPTZ NOT NULL,
+ date_written TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
  asker_name TEXT NOT NULL,
  asker_email TEXT NOT NULL,
  reported SMALLINT NOT NULL DEFAULT 0,
@@ -16,7 +16,7 @@ CREATE TABLE answers (
  id BIGSERIAL NOT NULL PRIMARY KEY,
  id_questions BIGINT,
  body TEXT NOT NULL,
- date_written TIMESTAMPTZ NOT NULL,
+ date_written TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
  answerer_name TEXT NOT NULL,
  answerer_email TEXT NOT NULL,
  reported SMALLINT NOT NULL DEFAULT 0,
@@ -42,3 +42,13 @@ COPY questions FROM '/Users/karlithomas/Code/hackreactor/QuestionsAndAnswers/que
 COPY answers FROM '/Users/karlithomas/Code/hackreactor/QuestionsAndAnswers/answers-processed.csv' DELIMITER ',' CSV HEADER;
 
 COPY answers_photos FROM '/Users/karlithomas/Code/hackreactor/QuestionsAndAnswers/answers_photos.csv' DELIMITER ',' CSV HEADER;
+
+SELECT setval('questions_id_seq', (SELECT max(id)+1 FROM questions));
+
+SELECT setval('answers_id_seq', (SELECT max(id)+1 FROM answers));
+
+SELECT setval('answers_photos_id_seq', (SELECT max(id)+1 FROM answers_photos));
+
+CREATE INDEX ON questions (product_id);
+CREATE INDEX ON answers (id_questions);
+CREATE INDEX ON answers_photos (id_answers);

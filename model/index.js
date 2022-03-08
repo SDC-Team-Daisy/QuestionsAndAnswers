@@ -48,13 +48,6 @@ FROM questions WHERE questions.product_id = $1;
     });
   },
 
-
-
-
-
-
-
-
    getAnswers: function(id, callback) {
     let queryString =
     `SELECT answers.id_questions, (
@@ -85,13 +78,15 @@ FROM questions WHERE questions.product_id = $1;
       callback(err, answers);
     });
   },
-  postQuestion: function(callback) {
-    let queryString = 'INSERT INTO questions LIMIT 10';
-    // let queryArg = [id];
-    pool.query(queryString, (err, questions) => {
+
+  postQuestion: function(question, callback) {
+    let queryString = 'INSERT INTO questions (product_id, body, asker_name, asker_email) VALUES($1, $2, $3, $4) RETURNING *;';
+    let queryArg = [question.product_id, question.body, question.name, question.email];
+    pool.query(queryString, queryArg, (err, questions) => {
       callback(err, questions);
     });
   },
+
   postAnswer: function(callback) {
     let queryString = 'INSERT INTO answers LIMIT 10';
     // let queryArg = [id];
