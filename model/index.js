@@ -1,13 +1,4 @@
-const { Pool } = require('pg')
-
-const pool = new Pool({
-  user: 'karlithomas',
-  host: 'localhost',
-  database: 'questionsandanswers',
-  // password: 'secretpassword',
-  port: 5432,
-});
-
+const pool = require('../connection');
 module.exports = {
   getQuestions: function(id, callback) {
     let queryString = `

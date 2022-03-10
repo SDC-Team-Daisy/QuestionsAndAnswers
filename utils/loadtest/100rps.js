@@ -14,7 +14,7 @@ const url = `http://localhost:3000/qa/questions?product_id=${id}`;
 
 export default function() {
   const res = http.get(url);
-  sleep(1);
+  // sleep(1);
 }
 
 

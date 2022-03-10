@@ -7,3 +7,7 @@ answers-processed.csv
 answers_photos-processed.csv
 newrelic.js
 newrelic_agent.log
+questionsandanswers.dump
+connection
+sdc-microservice.pem
+sdc.pem
