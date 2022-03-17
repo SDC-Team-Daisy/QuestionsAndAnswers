@@ -1,4 +1,5 @@
 const pool = require('../connection');
+
 module.exports = {
   getQuestions: function(id, callback) {
     let queryString = `
